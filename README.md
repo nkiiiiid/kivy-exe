@@ -11,8 +11,11 @@ kivy程序打包成exe
 ## 0x01要求环境
 
 >python 2.7（这是本文使用的版本）
+
 >kivy 1.9.1+
+
 >pyinstaller 3.1+
+
 
 
 ## 0x02打包步骤
@@ -63,8 +66,7 @@ kivy程序打包成exe
 >spec事实上是个py文件，所以可以使用import等py语法，为了让pyinstaller正确的打包kivy，需要做些修改，这些修改来自kivy官方文档：(<https://kivy.org/docs/guide/packaging-windows.html> )，修改后的完整spec如下：
 
 ```python
-
--     
+     
     from kivy.deps import sdl2, glew
     from kivy.tools.packaging.pyinstaller_hooks import get_deps_minimal,hookspath
     from PyInstaller.utils.hooks import collect_submodules
@@ -124,11 +126,13 @@ kivy程序打包成exe
 kivy打包exe的完整命令是这样的
 
 >```pyi-makespec –F main.py```
+>
 >```pyinstaller main.spec```
 
 如果你想让这个过程自动化点，可以把上面的命令写入bat文件，pyinstaller打包的输出比较长，为了方便查看可以输出到txt中，可以把如下命令保存为packet.bat：
 
 >```pyinstaller main.spec > package.txt 2>&1```
+
 >```pause```
 
 这样就会在当前目录生成一个package.txt包含了打包命令输出内容。同样可以在dist目录下建立一个调试批处理debug.bat：

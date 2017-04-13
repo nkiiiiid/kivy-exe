@@ -2,12 +2,15 @@
 kivy程序打包成exe
 ===
 
+![](https://img.shields.io/travis/rust-lang/rust.svg) ![](https://img.shields.io/badge/python-2.7-brightgreen.svg) ![](https://img.shields.io/badge/kivy-1.9.1%2B-brightgreen.svg) ![](https://img.shields.io/badge/pyinstaller-3.1%2B-brightgreen.svg) ![](https://img.shields.io/badge/powered%20by-海森堡测不准面包-brightgreen.svg)
+
 该打包方案仅用于1.9.1及以上版本，打包成的exe是32位还是64位取决于Python的位数。
 <font color=red>打包务必在administrator权限下进行，打包路径以及文件名都不能出现中文，否则在一些情况下会出现访问拒绝、编码错误导致打包失败。</font>
 
 
 ## 0x01要求环境
 
+>python 2.7（这是本文使用的版本）
 >kivy 1.9.1+
 >pyinstaller 3.1+
 
@@ -15,6 +18,7 @@ kivy程序打包成exe
 ## 0x02打包步骤
 
 ### 安装必要的包
+
 
 >```pip install pyinstaller```
 
@@ -27,7 +31,7 @@ kivy程序打包成exe
 >
 >\#生成spec文件，这里注意一点，要根据入口代码所在的文件名来生成spec，不过这条命令并不会检查当前目录下到底是否存在main.py文件，-F表示生成单一exe文件的spec，与多文件exe的spec不同的是没有collect段，生成的spec文件如下：
 
-```
+```python
     # -*- mode: python -*-
     
     block_cipher = None
@@ -58,7 +62,9 @@ kivy程序打包成exe
 ```
 >spec事实上是个py文件，所以可以使用import等py语法，为了让pyinstaller正确的打包kivy，需要做些修改，这些修改来自kivy官方文档：(<https://kivy.org/docs/guide/packaging-windows.html> )，修改后的完整spec如下：
 
-```    
+```python
+
+-     
     from kivy.deps import sdl2, glew
     from kivy.tools.packaging.pyinstaller_hooks import get_deps_minimal,hookspath
     from PyInstaller.utils.hooks import collect_submodules
